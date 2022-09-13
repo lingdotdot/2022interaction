@@ -136,6 +136,7 @@ void drawPokerCard(int x,int y,String face)
 }
 ```
 實作程式6:利用亂數隨機抽牌
+補充1:按滑鼠一下，就隨機抽牌一次
 ```
 void setup()
 {
@@ -177,4 +178,3 @@ void drawPokerCard(int x,int y,String face)
   text(face,x,y+40);
 }
 ```
-補充1:按滑鼠一下，就隨機抽牌一次
