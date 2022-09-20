@@ -224,8 +224,8 @@ void drawPokerCard(int x,int y,String face)
 ```
 -加上按滑鼠就做洗牌動作的功能
 -開始一步步寫出交換洗牌的程式碼
-  -寫出撲克牌的框框
   ```
+  -寫出撲克牌的框框
     void setup()
   {
     size(700,700);
