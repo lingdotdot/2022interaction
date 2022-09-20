@@ -241,8 +241,8 @@ void drawPokerCard(int x,int y,String face)
    }
   }
   ```
-  -寫出撲克牌的牌面
   ```
+  -寫出撲克牌的牌面
   void setup()
 {
   size(700,700);
@@ -268,8 +268,8 @@ void draw()
  }
 }
   ```
-  -寫出更好的撲克牌畫面
   ```
+  -寫出更好的撲克牌畫面
   void setup()
 {
   size(800,600);
@@ -297,8 +297,8 @@ void draw()
  }
 }
   ```
-  -寫出洗牌交換的動作
   ```
+  -寫出洗牌交換的動作
   void setup()
 {
   size(800,600);
