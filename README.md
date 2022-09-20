@@ -21,7 +21,7 @@
   rect(mouseX,mouseY,長,寬);
 -程式實作5:小畫家
   line(mouseX,mouseY,pmouseX,pmouseY);
-
+The End
 
 # Week02
 2022/09/12 天氣大雨
@@ -178,6 +178,7 @@ void drawPokerCard(int x,int y,String face)
   text(face,x,y+40);
 }
 ```
+The End
 
 # Week03
 -上禮拜最後一個程式複製貼上，做複習
@@ -389,3 +390,4 @@ void drawPokerCard(int x,int y,String face)
   text(face,x,y+40);
 }
 ```
+The End
