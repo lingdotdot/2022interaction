@@ -391,3 +391,228 @@ void drawPokerCard(int x,int y,String face)
 }
 ```
 The End
+
+# Week04
+今日目標:
+-iPhone 14 動態島的打彈珠遊戲
+-圍棋遊戲
+```
+主題一:動態島
+```
+```
+實作程式1:物理學家(牛頓):x(位置)，v(速度)，a(加速度)
+void setup()
+{
+  size(500,500);
+}
+int x=250,y=250;
+void draw()
+{
+   ellipse(x,y,10,10);
+   x=x+1;
+   y=y-1;
+}
+```
+```
+實作程式2:橢圓碰到四周，會做反彈的動作
+void setup()
+{
+  size(500,500);
+}
+float x=250,y=250;
+float vx=1.0,vy=-0.5;
+void draw()
+{
+   ellipse(x,y,10,10);
+   x=x+vx;
+   y=y+vy;
+   if(x>500)vx=-vx;
+   if(y<0)vy=-vy;
+   if(x<0)vx=-vx;
+   if(y>500)vy=-vy;
+}
+```
+```
+實作程式3:板板隨著滑鼠移動，碰到板板回彈
+void setup()
+{
+  size(500,500);
+}
+float x=250,y=250;
+float vx=2.0,vy=-1.5;
+void draw()
+{
+   background(#FFFFF2);
+   int boardX=mouseX;
+   rect(boardX,470,100,20);
+   ellipse(x,y,10,10);
+   x=x+vx;
+   y=y+vy;
+   if(x>500)vx=-vx;
+   if(y<0)vy=-vy;
+   if(x<0)vx=-vx;
+   if(y>470 && x>boardX && x<boardX+100)vy=-vy;
+}
+```
+```
+實作程式4:板板做得更精緻，加上滑鼠按左鍵板板會變大，滑鼠按右鍵板板會變小
+void setup()
+{
+  size(500,500);
+}
+float x=250,y=250;
+float vx=2.0,vy=-2.5;
+float boardX,boardY=470,boardW=100,boardH=20;
+void draw()
+{
+   boardX=mouseX-boardW/2;
+   background(#FFFFF2);
+   rect(boardX,boardY,boardW,boardH);
+   ellipse(x,y,10,10);
+   x=x+vx;
+   y=y+vy;
+   if(x>500)vx=-vx;
+   if(y<0)vy=-vy;
+   if(x<0)vx=-vx;
+   if((y>boardY && y<boardY+boardH) && (x>boardX && x<boardX+boardW))
+   {
+     vy=-vy;
+     vx+=(mouseX-pmouseX)/2;
+   }
+   if(mousePressed && mouseButton==LEFT)boardW*=1.01;
+   if(mousePressed && mouseButton==RIGHT)boardW*=0.99;
+}
+```
+```
+主題二:圍棋
+```
+```
+實作程式5:利用迴圈做圍棋的棋子排列
+void setup()
+{
+  size(500,500);
+}
+void draw()
+{
+   for(int x=100; x<=400;x+=50){
+     for(int y=100;y<=400;y+=50){
+       ellipse(x,y,50,50);
+     }
+   }
+}
+```
+```
+實作程式6:利用陣列做圍棋排列，利用陣列裡的數字，去改變圍棋的顏色為黑色
+void setup()
+{
+  size(500,500);
+}
+int [][] go ={
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,1,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+};
+void draw()
+{
+   for(int i=0; i<9; i++){
+     for(int j=0; j<9; j++){
+       if(go[i][j]==1)fill(0);
+       else fill(255);
+       ellipse(50+j*50,50+i*50,50,50);
+     }
+   }
+}
+```
+```
+實作程式7:做出棋盤的顏色和棋盤的格子線&陣列裡的數字去做白色或黑色棋子的顯示
+void setup()
+{
+  size(500,500);
+}
+int [][] go ={
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,2,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,1,0,0,0,0,0,1},
+   {0,0,0,0,0,2,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+   {0,0,0,0,0,0,0,0,1},
+};
+void draw()
+{
+  background(246,194,108);
+  for(int i=1;i<=9;i++)
+  {
+    line(50,50*i,450,50*i);
+    line(50*i,50,50*i,450);
+  }
+   for(int i=0; i<9; i++){
+     for(int j=0; j<9; j++){
+       if(go[i][j]==1){
+         fill(0);
+         ellipse(50+j*50,50+i*50,40,40);
+       }
+       else if(go[i][j]==2){
+         fill(255);
+         ellipse(50+j*50,50+i*50,40,40);         
+       }
+     }
+   }
+}
+```
+```
+實作程式8:按下滑鼠就可以下棋，黑白色棋子輪流下
+void setup()
+{
+  size(500,500);
+}
+int [][] go ={
+   {0,0,0,0,0,0,0,0,0},
+   {0,0,0,0,0,0,0,0,0},
+   {0,0,0,0,0,0,0,0,0},
+   {0,0,0,0,0,0,0,0,0},
+   {0,0,0,0,0,0,0,0,0},
+   {0,0,0,0,0,0,0,0,0},
+   {0,0,0,0,0,0,0,0,0},
+   {0,0,0,0,0,0,0,0,0},
+   {0,0,0,0,0,0,0,0,0},
+};
+int N=0;
+void mousePressed()
+{
+  int j=(mouseX-25)/50;
+  int i=(mouseY-25)/50;
+  go[i][j]=(N%2==0)?1:2;
+  N++;
+}
+void draw()
+{
+  background(246,194,108);
+  for(int i=1;i<=9;i++)
+  {
+    line(50,50*i,450,50*i);
+    line(50*i,50,50*i,450);
+  }
+   for(int i=0; i<9; i++){
+     for(int j=0; j<9; j++){
+       if(go[i][j]==1){
+         fill(0);
+         ellipse(50+j*50,50+i*50,40,40);
+       }
+       else if(go[i][j]==2){
+         fill(255);
+         ellipse(50+j*50,50+i*50,40,40);         
+       }
+     }
+   }
+}
+```
+The End
