@@ -903,3 +903,237 @@ void drawChess(int x, int y, int id){
 }
 ```
 THE END
+
+# Week07
+今日上課目標:1.複習暗棋2.記憶卡片遊戲3.打字遊戲,水果忍者/鍵盤忍者
+
+主題一:暗棋
+Step1:先去老師的github網址:github.com/jsyeh/2022interaction，把上上週(第五週)
+，最後一個暗棋程式碼複製貼上。
+```
+Step2:更改三個地方:改中文，加入亂數洗牌，翻牌迴圈有錯誤。
+int [][]show={
+  { 0, 0, 0, 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0, 0, 0, 0}
+};//翻牌前, 0 都不會秀哦! 
+int [][]board={
+  { 1, 2, 2, 3, 3, 4, 4, 5},
+  { 5, 6, 6, 7, 7, 7, 7, 7},
+  {-1,-2,-2,-3,-3,-4,-4,-5},
+  {-5,-6,-6,-7,-7,-7,-7,-7}
+}; //暗棋的格子,比較少 4x8=32個棋子
+void setup(){
+  size(500,300);
+  PFont font = createFont("標楷體", 30);
+  textFont(font);
+  textAlign(CENTER, CENTER);
+  for(int k=0;k<1000;k++)
+  {
+    int i1=int(random(4)),j1=int(random(8));
+    int i2=int(random(4)),j2=int(random(8));
+    int temp=board[i1][j1];
+    board[i1][j1]=board[i2][j2];
+    board[i2][j2]=temp;
+  }
+}
+void draw(){
+  background(#F0B82C);
+  for (int x=50; x<=450; x+=50) {
+    line( x, 50, x, 250);
+  }
+  for (int y=50; y<=250; y+=50) {
+    line( 50, y, 450, y);
+  }  
+  for(int i=0; i<4; i++){
+    for(int j=0; j<8; j++){
+      if(show[i][j]==0){
+        fill(255);
+        ellipse( 50+25+j*50, 50+25+i*50, 40, 40);        
+      }else{
+        int id = board[i][j];
+        drawChess(50+25+j*50, 50+25+i*50, id);
+      }
+    }
+  }
+}
+void mousePressed(){
+  for(int i=0; i<4; i++){
+    for(int j=0; j<8; j++){
+      if(dist(mouseX,mouseY,50+25+j*50,50+25+i*50)<20){
+        if( show[i][j]==0 ) show[i][j] = 1; //沒秀? 秀它
+        //之後再加棋子的移動
+      }
+    }
+  }
+}
+String [] name = {"將", "士", "象", "車", "馬", "包", "卒"};
+String [] name2 = {"帥", "仕", "相", "俥", "傌", "炮", "兵"};
+void drawChess(int x, int y, int id){
+    fill(255);
+    ellipse( x, y, 40, 40);
+    if(id>0){//黑
+      fill(0);
+      text( name[id-1], x, y-3);
+    }else{//紅
+      fill(255,0,0);
+      text( name2[-id-1], x, y-3);
+    }
+}
+```
+```
+Step3:加上棋子移動+吃棋。
+-按下已翻牌的棋子，棋子顏色會變綠色，代表選擇這個棋子(待移動中的棋子)。
+-移動的棋子，底棋會變透明的。
+-移動棋子並吃棋。移動後，原本位置的棋子不會再顯示。
+int [][]show={
+  { 0, 0, 0, 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0, 0, 0, 0}
+};//翻牌前, 0 都不會秀哦! 
+int [][]board={
+  { 1, 2, 2, 3, 3, 4, 4, 5},
+  { 5, 6, 6, 7, 7, 7, 7, 7},
+  {-1,-2,-2,-3,-3,-4,-4,-5},
+  {-5,-6,-6,-7,-7,-7,-7,-7}
+}; //暗棋的格子,比較少 4x8=32個棋子
+void setup(){
+  size(500,300);
+  PFont font = createFont("標楷體", 30);
+  textFont(font);
+  textAlign(CENTER, CENTER);
+  for(int k=0;k<1000;k++)
+  {
+    int i1=int(random(4)),j1=int(random(8));
+    int i2=int(random(4)),j2=int(random(8));
+    int temp=board[i1][j1];
+    board[i1][j1]=board[i2][j2];
+    board[i2][j2]=temp;
+  }
+}
+void draw(){
+  background(#F0B82C);
+  for (int x=50; x<=450; x+=50) {
+    line( x, 50, x, 250);
+  }
+  for (int y=50; y<=250; y+=50) {
+    line( 50, y, 450, y);
+  }  
+  for(int i=0; i<4; i++){
+    for(int j=0; j<8; j++){
+      if(show[i][j]==0){
+        fill(255);
+        ellipse( 50+25+j*50, 50+25+i*50, 40, 40);        
+      }else{
+        int id = board[i][j];
+        drawChess(50+25+j*50, 50+25+i*50, id);
+      }
+    }
+  }
+  if(moving)
+  {
+       fill(0,255,0,128);
+       ellipse(50+25+moveJ*50,50+25+moveI*50,40,40);
+       
+       drawChess(mouseX,mouseY,moveID);    
+  }
+}
+int moveI=-1,moveJ=-1,moveID=-1;
+boolean moving=false;
+void mousePressed(){
+  for(int i=0; i<4; i++){
+    for(int j=0; j<8; j++){
+      if(dist(mouseX,mouseY,50+25+j*50,50+25+i*50)<20){
+        if( show[i][j]==0 ) show[i][j] = 1; //沒秀? 秀它
+        //之後再加棋子的移動
+        else{
+          moveI=i;
+          moveJ=j;
+          moveID=board[i][j];
+          moving=true;
+        }
+      }
+    }
+  }
+}
+void mouseReleased()
+{
+  for(int i=0;i<4;i++){
+    for(int j=0;j<8;j++){
+         if(dist(mouseX,mouseY,50+25+j*50,50+25+i*50)<20){
+           if(moving){
+             board[moveI][moveJ]=0;
+             board[i][j]=moveID;
+             moving=false;
+           }
+         }
+      }
+  }
+}
+String [] name = {"將", "士", "象", "車", "馬", "包", "卒"};
+String [] name2 = {"帥", "仕", "相", "俥", "傌", "炮", "兵"};
+void drawChess(int x, int y, int id){
+    if(id==0)return;
+    fill(255);
+    ellipse( x, y, 40, 40);
+    if(id>0){//黑
+      fill(0);
+      text( name[id-1], x, y-3);
+    }else{//紅
+      fill(255,0,0);
+      text( name2[-id-1], x, y-3);
+    }
+}
+```
+
+主題二:水果忍者
+-下載音樂檔:moodle上第二個網址為整個遊戲程式碼，打開js檔案Ctrl-F搜尋框內輸入mp3，改變moodle上的第三個網址的檔名去做下載。
+-把音樂檔拖拉至程式碼檔案內(Ctrl-K看檔案，data裡會音檔)
+-程式碼要能撥音檔前，要先把外掛裝起來(Sketch-Library-Manage Libraries，找sound開頭的下載。
+-使用SoundFile撥放音樂:程式碼開始撥放音樂，按下滑鼠變換音樂。
+```
+import processing.sound.*;
+void setup()
+{
+   SoundFile file=new SoundFile(this,"Intro Song_Final.mp3");
+   file.play();
+}
+void draw()
+{
+  
+}
+void mousePressed()
+{
+   SoundFile file=new SoundFile(this,"In Game Music.mp3");
+   file.play();  
+}
+```
+```
+-利用鍵盤互動去做很多音樂檔的撥放。
+import processing.sound.*;
+SoundFile file1,file2,file3,file4;
+void setup()
+{
+   file1=new SoundFile(this,"Intro Song_Final.mp3");
+   file2=new SoundFile(this,"In Game Music.mp3");
+   file3=new SoundFile(this,"Cannon Blast.mp3");
+   file4=new SoundFile(this,"sword slash.mp3");
+   
+   file1.play();
+}
+void draw()
+{
+  
+}
+void mousePressed()
+{
+   file2.play();  
+}
+void keyPressed()
+{
+  file3.play();
+}
+```
+The End
