@@ -1092,8 +1092,8 @@ void drawChess(int x, int y, int id){
 -下載音樂檔:moodle上第二個網址為整個遊戲程式碼，打開js檔案Ctrl+F搜尋框內輸入mp3，改變moodle上的第三個網址的檔名去做下載。
 -把音樂檔拖拉至程式碼檔案內(Ctrl+K看檔案，data裡會有音檔)
 -程式碼要能播音檔前，要先把外掛裝起來(Sketch-Library-Manage Libraries，找sound開頭的下載。
--使用SoundFile播放音樂:程式碼開始播放音樂，按下滑鼠變換音樂。
 ```
+-使用SoundFile播放音樂:程式碼開始播放音樂，按下滑鼠變換音樂。
 import processing.sound.*;
 void setup()
 {
