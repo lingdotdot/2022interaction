@@ -1137,3 +1137,245 @@ void keyPressed()
 }
 ```
 The End
+
+# Week08
+目標:繼續做上週的水果忍者:先把上週播放音樂前的設定步驟做一做。
+```
+1.寫個簡單的播音樂程式。
+import processing.sound.*;
+SoundFile sound1,sound2,sound3;
+void setup()
+{
+  size(400,300);
+  sound1=new SoundFile(this,"In Game Music.mp3");
+  sound1.play();
+}
+void draw()
+{
+  
+}
+```
+```
+2.利用一個變數，搭配滑鼠偵測，用if判斷stage，做相對的音樂切換。
+import processing.sound.*;
+SoundFile sound1,sound2,sound3;
+void setup()
+{
+  size(400,300);
+  textSize(50);
+  fill(255,0,0);
+  sound1=new SoundFile(this,"In Game Music.mp3");
+  sound2=new SoundFile(this,"Intro Song_Final.mp3");
+  sound1.play();
+}
+int stage=1;
+void draw()
+{
+  background(255);
+  if(stage==1){
+     text("stage 1",100,100);
+  }else if(stage==2){
+     text("stage 2",100,100);
+  }
+}
+void mousePressed()
+{
+   if(stage==1){
+     stage=2;
+     sound1.stop();
+     sound2.play();
+   }else if(stage==2){
+     stage=1;
+     sound2.stop();
+     sound1.play();
+   }
+}
+```
+```
+3.太複雜了!所以不加音樂，再做一次stage切換的程式。
+void setup()
+{
+  size(400,300);
+}
+int stage=1;
+void draw()
+{
+  background(255,255,0);
+  fill(255,0,0);
+  textSize(80);
+  if(stage==1){
+    text("stage 1",100,100);
+  }else if(stage==2){
+    text("stage 2",100,100);
+  }
+}
+void mousePressed()
+{
+  if(stage==1)stage=2;
+  else if (stage==2)stage=1;
+}
+```
+```
+4.水果飛起來，按下鍵盤，水果暫停。
+
+void setup()
+{
+  size(400,300);
+}
+float fruitX=200,fruitY=150;
+float fruitVX=1,fruitVY=-1;
+boolean flying=true;
+void draw()
+{
+  background(255,255,0);
+  
+  ellipse(fruitX,fruitY,50,50);
+  if(flying){
+    fruitX+=fruitVX;
+    fruitY+=fruitVY;
+  }
+}
+void keyPressed()
+{
+  flying=false;
+}
+```
+```
+5.水果加上重力，然後改變每次的位置。
+void setup()
+{
+  size(400,300);
+}
+float fruitX=200,fruitY=300;
+float fruitVX=2,fruitVY=-13;
+boolean flying=true;
+void draw()
+{
+  background(255,255,0);
+  
+  ellipse(fruitX,fruitY,50,50);
+  if(flying){
+    fruitX+=fruitVX;
+    fruitY+=fruitVY;
+    fruitVY+=0.98/3;
+  }
+}
+void keyPressed()
+{
+  flying=false;
+  fruitReset();
+}
+void fruitReset()
+{
+  fruitX=random(100,300);
+  fruitY=300;
+  fruitVX=random(-2,+2);
+  fruitVY=-13;
+  flying=true;
+}
+```
+```
+6.把全部水果寫成一個class，更高階的寫法。
+class Fruit{
+  float x,y,vx,vy;
+  boolean flying;
+  PApplet sketch;
+  Fruit(PApplet _sketch){
+    sketch=_sketch;
+    reset();
+  }
+  void reset()
+  {
+    x=sketch.random(100.0,300.0);
+    y=300;
+    vx=sketch.random(-2,+2);
+    vy=-13;
+    flying=true;
+  }
+  void update(){
+    x+=vx;
+    y+=vy;
+    vy+=0.98/3;
+  }
+}
+Fruit fruit;
+void setup()
+{
+  size(400,300);
+  fruit=new Fruit(this);
+}
+void draw()
+{
+  background(255,255,0);
+  ellipse(fruit.x,fruit.y,50,50);
+  fruit.update();
+}
+void keyPressed()
+{
+  fruit.reset();
+}
+```
+```
+7.如果按對水果上的字母，會再跑出一個水果。
+Fruit [] fruits;
+void setup()
+{
+  size(400,300);
+  fruits=new Fruit[3];
+  for(int i=0;i<3;i++)
+  {
+    fruits[i]=new Fruit(this);
+  }
+}
+void draw()
+{
+  background(255,255,0);
+  for(int i=0;i<3;i++){
+    fill(255);ellipse(fruits[i].x,fruits[i].y,50,50);
+    textSize(30);
+    textAlign(CENTER,CENTER);
+    fill(0);text(fruits[i].c,fruits[i].x,fruits[i].y);
+    fruits[i].update();
+  }
+}
+void keyPressed()
+{
+  for(int i=0;i<3;i++)
+  {
+    if(keyCode==fruits[i].c)
+    {
+      fruits[i].reset();
+    }
+  }
+}
+```
+```
+Fruit Class
+String line="ABCDEFGHIJKLMNOPQRSTUVWXY";
+class Fruit{
+  float x,y,vx,vy;
+  boolean flying;
+  PApplet sketch;
+  char c;
+  Fruit(PApplet _sketch){
+    sketch=_sketch;
+    reset();
+  }
+  void reset()
+  {
+    x=sketch.random(100.0,300.0);
+    y=300;
+    vx=sketch.random(-2,+2);
+    vy=-13;
+    flying=true;
+    int i=int(random(26));
+    c=line.charAt(i);
+  }
+  void update(){
+    x+=vx;
+    y+=vy;
+    vy+=0.98/3;
+  }
+}
+```
+The End
