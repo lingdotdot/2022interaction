@@ -1350,7 +1350,7 @@ void keyPressed()
 }
 ```
 ```
-Fruit Class
+//Fruit Class
 String line="ABCDEFGHIJKLMNOPQRSTUVWXY";
 class Fruit{
   float x,y,vx,vy;
