@@ -1382,3 +1382,7 @@ The End
 
 # Week10
 老師講解期中報告及示範幾種類型遊戲的程式碼。
+爆爆王version 1。
+
+# Week11
+爆爆王version 2。
