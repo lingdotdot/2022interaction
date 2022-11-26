@@ -1386,3 +1386,7 @@ The End
 
 # Week11
 爆爆王version 2。
+
+# Week12
+老師有教網路連線的方法。
+爆爆王version 3。
