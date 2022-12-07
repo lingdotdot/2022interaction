@@ -1398,3 +1398,7 @@ The End
 爆爆王version 4。
 問題:程式碼排版問題。
 The End
+
+# Week14
+爆爆王升級
+The End
