@@ -1400,9 +1400,9 @@ The End
 The End
 
 # Week14
-爆爆王升級
+爆爆王升級。
 The End
 
 # Week15
-爆爆王升級
+爆爆王升級。
 The End
