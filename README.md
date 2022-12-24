@@ -1406,3 +1406,7 @@ The End
 # Week15
 爆爆王升級。
 The End
+
+# Week16
+爆爆王升級。
+The End
