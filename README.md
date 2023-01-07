@@ -1411,6 +1411,6 @@ The End
 爆爆王升級。
 The End
 
-#Week17
+# Week17
 爆爆王完成。
 The End
